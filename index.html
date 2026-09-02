@@ -34,8 +34,8 @@
     box-shadow: 0 4px 20px rgba(0,0,0,0.05);
     padding: 40px 28px;
   }
-  .logo-ra { text-align: center; margin-bottom: 30px; }
-  .event-logo { text-align: center; margin-bottom: 36px; }
+  .logo-ra { text-align: center; margin-bottom: 34px; }
+  .event-logo { text-align: center; margin-bottom: 14px; }
   .section-header {
     background: var(--primary);
     color: white;
@@ -232,19 +232,31 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
+  .footer-logos {
+    margin-top: 40px;
+    padding-top: 26px;
+    border-top: 1px solid #EEEEEE;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 26px;
+    flex-wrap: wrap;
+  }
+  .footer-logos img { height: 34px; width: auto; }
   @media (max-width: 480px) {
     .container { padding: 32px 20px; }
+    .footer-logos img { height: 28px; }
   }
 </style>
 </head>
 <body>
 <div class="container">
 
-  <div class="logo-ra">
-    <img src="logo.png" alt="ra" style="max-width: 140px; height: auto;">
-  </div>
   <div class="event-logo">
-    <img src="event-logo.png" alt="동마 디스턴스 챌린지" style="max-width: 280px; height: auto;">
+    <img src="event-logo.png" alt="동마 디스턴스 챌린지" style="max-width: 320px; height: auto;">
+  </div>
+  <div class="logo-ra">
+    <img src="logo.png" alt="ra" style="max-width: 64px; height: auto;">
   </div>
 
   <!-- 검색 화면 -->
@@ -310,6 +322,12 @@
 
     <a href="#" id="certLink" class="btn-download" target="_blank">기록증 다운로드</a>
     <button class="btn-back" id="backBtn">다시 검색</button>
+  </div>
+
+  <!-- 주최·주관 -->
+  <div class="footer-logos">
+    <img src="dongma-club.png" alt="DONGMA CLUB">
+    <img src="seocho.png" alt="서초구육상연맹">
   </div>
 
 </div>
