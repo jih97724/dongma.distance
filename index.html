@@ -242,10 +242,10 @@
     gap: 26px;
     flex-wrap: wrap;
   }
-  .footer-logos img { height: 34px; width: auto; }
+  .footer-logos img { height: 46px; width: auto; }
   @media (max-width: 480px) {
     .container { padding: 32px 20px; }
-    .footer-logos img { height: 28px; }
+    .footer-logos img { height: 38px; }
   }
 </style>
 </head>
@@ -363,7 +363,7 @@
         return;
       }
 
-      weekSelect.innerHTML = '<option value="all">📅 전체 회차에서 이름 검색</option><option value="">-- 회차 선택 --</option>';
+      weekSelect.innerHTML = '<option value="">-- 회차 선택 --</option>';
       weeks.forEach((w, idx) => {
         const opt = document.createElement('option');
         opt.value = idx;
@@ -371,11 +371,7 @@
         weekSelect.appendChild(opt);
       });
 
-      // 기본값: 전체 회차에서 이름 검색
-      weekSelect.value = 'all';
-      searchStatus.innerHTML = '<div class="status" style="color:#999;font-size:12px;">📅 전체 회차에서 이름 또는 배번호로 검색하세요</div>';
-      searchInput.disabled = false;
-      searchBtn.disabled = false;
+      searchStatus.innerHTML = '<div class="status" style="color:#999;font-size:12px;">이름 또는 배번호로 검색하세요</div>';
     } catch (err) {
       weekSelect.innerHTML = '<option value="">로드 실패</option>';
       searchStatus.innerHTML = '<div class="status error">회차 목록 로드 실패: ' + err.message + '</div>';
@@ -401,7 +397,7 @@
       const res = await fetch(week.api);
       if (!res.ok) throw new Error('API 응답 실패');
       participants = await res.json();
-      searchStatus.innerHTML = '<div class="status" style="color:#999;font-size:12px;">' + week.label + '</div>';
+      searchStatus.innerHTML = '<div class="status" style="color:#999;font-size:12px;">' + week.label + ' · 이름 또는 배번호로 검색하세요</div>';
       searchInput.disabled = false;
       searchBtn.disabled = false;
     } catch (err) {
@@ -416,13 +412,6 @@
       return;
     }
 
-    // 전체 회차 검색 모드
-    if (weekSelect.value === 'all') {
-      await searchAllWeeks(query);
-      return;
-    }
-
-    // 단일 회차 검색
     const num = parseInt(query, 10);
     let found = null;
 
@@ -449,50 +438,6 @@
     } else {
       searchStatus.innerHTML = '<div class="status error">"' + query + '" 에 해당하는 참가자를 찾을 수 없어요.</div>';
     }
-  }
-
-  async function searchAllWeeks(query) {
-    searchStatus.innerHTML = '<div class="status"><span class="spinner"></span><div style="margin-top:10px;">전체 회차 검색 중...</div></div>';
-
-    const num = parseInt(query, 10);
-    const isNumber = !isNaN(num) && String(num) === query;
-
-    const allMatches = [];
-    await Promise.all(weeks.map(async (week, idx) => {
-      try {
-        const res = await fetch(week.api);
-        if (!res.ok) return;
-        const data = await res.json();
-        data.forEach(p => {
-          let match = false;
-          if (isNumber && p.Bib === num) match = true;
-          const name = getName(p);
-          if (!isNumber && name && name.includes(query)) match = true;
-          if (match) {
-            allMatches.push({ week, weekIdx: idx, participant: p });
-          }
-        });
-      } catch (err) {}
-    }));
-
-    if (allMatches.length === 0) {
-      searchStatus.innerHTML = '<div class="status error">"' + query + '" 에 해당하는 참가자를 찾을 수 없어요.</div>';
-      return;
-    }
-
-    if (allMatches.length === 1) {
-      // 한 명만 매칭 → 바로 상세
-      currentWeek = allMatches[0].week;
-      const eventLogoImg = document.querySelector('.event-logo img');
-      eventLogoImg.src = allMatches[0].week.logo || 'event-logo.png';
-      searchStatus.innerHTML = '';
-      showDetail(allMatches[0].participant);
-      return;
-    }
-
-    // 여러 매칭 → 이벤트 목록 표시
-    showEventList(query, allMatches);
-    searchStatus.innerHTML = '';
   }
 
   function showEventList(query, matches) {
@@ -603,14 +548,12 @@
 
   weekSelect.addEventListener('change', (e) => {
     const val = e.target.value;
-    if (val === 'all') {
-      // 전체 회차 모드 - 검색 입력만 활성화
-      searchStatus.innerHTML = '<div class="status" style="color:#999;font-size:12px;">📅 전체 회차에서 이름 또는 배번호로 검색하세요</div>';
-      searchInput.disabled = false;
-      searchBtn.disabled = false;
-      participants = [];
-    } else if (val !== '') {
+    if (val !== '') {
       loadWeekData(parseInt(val, 10));
+    } else {
+      searchInput.disabled = true;
+      searchBtn.disabled = true;
+      searchStatus.innerHTML = '<div class="status" style="color:#999;font-size:12px;">이름 또는 배번호로 검색하세요</div>';
     }
   });
   searchBtn.addEventListener('click', searchParticipant);
