@@ -1,0 +1,12 @@
+[
+  {
+    "label": "2회차 · 2026.10.16 (금)",
+    "api": "round2.json",
+    "logo": "event-logo.png"
+  },
+  {
+    "label": "1회차 · 2026.09.04 (금)",
+    "api": "round1.json",
+    "logo": "event-logo.png"
+  }
+]
