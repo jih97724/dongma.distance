@@ -1,12 +1,7 @@
 [
   {
-    "label": "2회차 · 2026.10.16 (금)",
-    "api": "round2.json",
-    "logo": "event-logo.png"
-  },
-  {
     "label": "1회차 · 2026.09.04 (금)",
-    "api": "round1.json",
+    "api": "https://api.raceresult.com/419682/G7HH41Z4K8ZRU2ZT66TR285SJVLB8WPP",
     "logo": "event-logo.png"
   }
 ]
