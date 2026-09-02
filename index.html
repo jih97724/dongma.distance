@@ -317,7 +317,7 @@
       <div class="info-value" id="vPace">-</div>
     </div>
 
-    <div class="section-divider"><span class="section-divider-label">Splits</span></div>
+    <div class="section-divider"><span class="section-divider-label">세부 기록</span></div>
     <div id="splitsContainer"></div>
 
     <a href="#" id="certLink" class="btn-download" target="_blank">기록증 다운로드</a>
@@ -552,7 +552,7 @@
 
     splitsContainer.innerHTML = '';
     if (splitKeys.length === 0) {
-      splitsContainer.innerHTML = '<div class="status" style="font-size:12px;">구간 기록 없음</div>';
+      splitsContainer.innerHTML = '<div class="status" style="font-size:12px;">세부 기록 없음</div>';
     } else {
       splitKeys.forEach(key => {
         const row = document.createElement('div');
@@ -567,7 +567,14 @@
       });
     }
 
-    document.getElementById('certLink').href = p['기록증링크'] || '#';
+    const certLink = document.getElementById('certLink');
+    const certUrl = p['기록증링크'];
+    if (certUrl && String(certUrl).trim() !== '') {
+      certLink.href = certUrl;
+      certLink.style.display = 'block';
+    } else {
+      certLink.style.display = 'none';
+    }
 
     searchView.style.display = 'none';
     eventListView.classList.remove('active');
