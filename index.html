@@ -241,7 +241,9 @@
     justify-items: center;
     align-items: center;
   }
-  .footer-logos img { height: 40px; width: auto; }
+  .footer-logos a, .footer-logo-item { display: flex; justify-content: center; align-items: center; }
+  .footer-logos a:hover img { opacity: 0.7; }
+  .footer-logos img { height: 40px; width: auto; transition: opacity 0.2s; }
   @media (max-width: 480px) {
     .container { padding: 32px 20px; }
     .footer-logos img { height: 32px; }
@@ -322,9 +324,9 @@
 
   <!-- 주최·주관 -->
   <div class="footer-logos">
-    <img src="logo.png" alt="런카이브">
-    <img src="dongma-club.png" alt="DONGMA CLUB">
-    <img src="seocho.png" alt="서초구육상연맹">
+    <a href="https://runarchive.com" target="_blank" rel="noopener"><img src="logo.png" alt="런카이브"></a>
+    <a href="https://dongma.club" target="_blank" rel="noopener"><img src="dongma-club.png" alt="DONGMA CLUB"></a>
+    <span class="footer-logo-item"><img src="seocho.png" alt="서초구육상연맹"></span>
   </div>
 
 </div>
